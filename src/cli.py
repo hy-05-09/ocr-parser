@@ -1,0 +1,1 @@
+from parser.pipeline import parse_text

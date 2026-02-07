@@ -1,0 +1,18 @@
+[project]
+name = "ocr-parser"
+version = "0.1.0"
+description = "Rule-based OCR text parser for weighing slips"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
