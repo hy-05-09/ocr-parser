@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Optional, List, Literal
 from pydantic import BaseModel, Field
 
-Direction = Literal["In", "Out", "UNKNOWN"] # 입고/출고/알수없음
+Direction = Literal["IN", "OUT", "UNKNOWN"] # 입고/출고/알수없음
 
 # 추출 결과 검증 후 이상 징후 경고로 모아두는 품질 리포트
 class ValidationResult(BaseModel):
@@ -24,7 +24,7 @@ class Fields(BaseModel):
     tare_kg: Optional[int] = None # 차중량
     net_kg: Optional[int] = None # 실중량
 
-    lan: Optional[float] = None # 위도
+    lat: Optional[float] = None # 위도
     lon: Optional[float] = None # 경도
 
     id_no: Optional[str] = None # 식별번호

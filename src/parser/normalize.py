@@ -4,9 +4,13 @@ import re
 
 
 RE_DATE = re.compile(r"(20\d{2})[-/.](\d{2})[-/.](\d{2})")
+RE_DATE_TIME_HMS = re.compile(
+    r"(20\d{2}[-/.]\d{2}[-/.]\d{2})\s*([01]?\d|2[0-3]):([0-5]\d)(?::([0-5]\d))?"
+)
 RE_TIME_HMS = re.compile(r"\b([01]?\d|2[0-3]):([0-5]\d)(?::([0-5]\d))?\b")
 RE_TIME_KO = re.compile(r"(\d{1,2})\s*시\s*(\d{1,2})\s*분")
-RE_LATLON = re.compile(r"(-?\d{1,3\.\d+})\s*,\s*(-?\d{1,3}\.\d+)")
+RE_LATLON = re.compile(r"(-?\d{1,3}\.\d+)\s*,\s*(-?\d{1,3}\.\d+)")
+
 
 def normalize_whitespace(s: str) -> str:
     """
@@ -43,6 +47,11 @@ def pick_first_time(text: str) -> Optional[str]:
         2) HH시 MM분
         3) 날짜 뒤에 오는 HHMM, e.g., '2026-02-02 0016'
     """
+    mdt = RE_DATE_TIME_HMS.search(text)
+    if mdt:
+        hh, mm, ss = int(mdt.group(2)), int(mdt.group(3)), int(mdt.group(4) or 0)
+        return f"{hh:02d}:{mm:02d}:{ss:02d}"
+    
     m = RE_TIME_HMS.search(text)
     if m:
         hh, mm, ss = m.group(1), m.group(2), m.group(3) or "00"
